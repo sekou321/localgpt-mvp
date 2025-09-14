@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Contribuer - LocalGPT{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Ajouter une information</h2>
+        <p class="text-muted">Partagez vos connaissances pour enrichir la base locale.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <form method="post" class="row g-3">
+                        {% csrf_token %}
+                        <!-- Titre -->
+                        <div class="col-12">
+                            <label for="id_title" class="form-label fw-bold">Titre</label>
+                            {{ form.title }}
+                        </div>
+                        <!-- Description -->
+                        <div class="col-12">
+                            <label for="id_description" class="form-label fw-bold">Description</label>
+                            {{ form.description }}
+                        </div>
+                        <!-- Catégorie -->
+                        <div class="col-md-6">
+                            <label for="id_category" class="form-label fw-bold">Catégorie</label>
+                            {{ form.category }}
+                        </div>
+                        <!-- Région -->
+                        <div class="col-md-6">
+                            <label for="id_region" class="form-label fw-bold">Région</label>
+                            {{ form.region }}
+                        </div>
+                        <!-- Boutons -->
+                        <div class="col-12 d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-danger btn-lg fw-bold">Soumettre</button>
+                            <a href="{% url 'home' %}" class="btn btn-secondary btn-lg fw-bold">Annuler</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

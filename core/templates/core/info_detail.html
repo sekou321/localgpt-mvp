@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Détail - {{ info.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Titre principal -->
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">{{ info.title }}</h1>
+        <p class="text-muted">
+            Partagé le {{ info.created_at|date:"d/m/Y H:i" }}
+            {% if info.contributor %} 
+                par <strong>{{ info.contributor.username }}</strong>
+            {% else %} 
+                par <em>Anonyme</em>
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Carte info -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <!-- Description -->
+                    <h5 class="fw-bold mb-3">📝 Description</h5>
+                    <p class="mb-4">{{ info.description|linebreaks }}</p>
+
+                    <!-- Métadonnées avec badges -->
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-2">
+                            <span class="fw-bold">Catégorie :</span>
+                            <span class="badge bg-primary">{{ info.category.name }}</span>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <span class="fw-bold">Région :</span>
+                            <span class="badge bg-info text-dark">{{ info.region.name }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Statut -->
+                    <p class="mb-4">
+                        <span class="fw-bold">Statut :</span>
+                        {% if info.validated %}
+                            <span class="badge bg-success">✅ Validée</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">⏳ En attente</span>
+                        {% endif %}
+                    </p>
+
+                    <!-- Boutons -->
+                    <div class="mt-4 d-flex justify-content-between">
+                        <a href="{% url 'all_infos' %}" class="btn btn-secondary">
+                            ⬅ Retour à la liste
+                        </a>
+                        <a href="{% url 'home' %}" class="btn btn-outline-dark">
+                            🏠 Accueil
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Accueil - LocalGPT{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4 fw-bold">Bienvenue sur LocalGPT 🌍</h1>
+    <p class="lead mb-4">
+        Une plateforme collaborative pour partager des savoirs locaux et culturels.
+    </p>
+    <div class="d-flex justify-content-center gap-3 mb-5">
+        <a href="{% url 'contribute' %}" class="btn btn-danger btn-lg">➕ Contribuer</a>
+        <a href="{% url 'all_infos' %}" class="btn btn-outline-dark btn-lg">📋 Voir toutes les infos</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="mb-4">Infos validées récemment</h2>
+    {% if infos %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for info in infos %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm hover-shadow transition">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ info.title }}</h5>
+                            <p class="card-text">{{ info.description|truncatechars:120 }}</p>
+                            <p class="card-text">
+                                <small class="text-muted">{{ info.category.name }} - {{ info.region.name }}</small>
+                            </p>
+                            <a href="{% url 'info_detail' info.id %}" class="btn btn-sm btn-primary">Voir détail</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            {{ info.created_at|date:"d M Y" }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">Aucune info validée pour l'instant.</p>
+    {% endif %}
+</div>
+
+<style>
+/* Hover effect sur les cards */
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease-in-out;
+}
+.transition {
+    transition: all 0.3s ease-in-out;
+}
+</style>
+{% endblock %}
+
