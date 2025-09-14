@@ -15,18 +15,31 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-import dj_database_url
 import os
+import dj_database_url
+from pathlib import Path
 
-# Sécurité
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-key')
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
-ALLOWED_HOSTS = ['*']  # temporaire pour test
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Base de données PostgreSQL via Heroku
-DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
-}
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
+ALLOWED_HOSTS = ['localgpt-mvp.herokuapp.com', '127.0.0.1', 'localhost']
+
+# Configuration de la base
+if 'DATABASE_URL' in os.environ:  
+    # Heroku → PostgreSQL
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    }
+else:
+    # Local → SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 
 # Static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
