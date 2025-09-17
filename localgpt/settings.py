@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['localgpt-mvp.herokuapp.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['localgpt-mvp.onrender.com', '127.0.0.1', 'localhost']
 
 # Configuration de la base
 if 'DATABASE_URL' in os.environ:  
