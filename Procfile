@@ -1,1 +1,1 @@
-web: gunicorn donni.wsgi --log-file -
+web: gunicorn localgpt.wsgi
